@@ -4,9 +4,16 @@
 #include <QDebug>
 #include <QStandardPaths>
 
+
 ImageManager::ImageManager(QObject *parent)
-    : QObject{parent}, m_currentIndex(0)
+    : QObject{parent}, m_currentIndex(0),m_imageStorage(nullptr)
 {}
+
+void ImageManager::setImageStorage(ImageStorage *storage)
+{
+    m_imageStorage = storage;
+}
+
 
 void ImageManager::processImagePaths(const QStringList &filepaths)
 {
@@ -39,6 +46,9 @@ void ImageManager::processImagePaths(const QStringList &filepaths)
             }
         }
     }
+    if(m_imageStorage){
+        m_imageStorage->getImagesbyPath(m_imageUrls);
+    }
     qDebug() << "Processed" << processedCount << "valid image files";
     m_currentIndex = 0;
     emit imageUrlsChanged();
@@ -50,7 +60,9 @@ void ImageManager::setCurrentIndex(int index) {
     if (index >= 0 && index < m_imageUrls.size() && index != m_currentIndex) {
         m_currentIndex = index;
         emit currentIndexChanged();
+        emit currentImageIndexChanged(m_currentIndex);
     }
+
 }
 
 void ImageManager::nextImage() {
@@ -72,4 +84,7 @@ void ImageManager::clearImages()
     emit imageUrlsChanged();
     emit totalImagesChanged();
     emit currentIndexChanged();
+    if(m_imageStorage){
+        m_imageStorage->clearImages();
+    }
 }

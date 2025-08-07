@@ -2,6 +2,8 @@
 #include <QQmlApplicationEngine>
 #include "imagemanager.h"
 #include "selectionmanager.h"
+#include "colortoolprocessor.h"
+#include "imagestorage.h"
 
 int main(int argc, char *argv[])
 {
@@ -10,6 +12,8 @@ int main(int argc, char *argv[])
     QQmlApplicationEngine engine;
     qmlRegisterType<ImageManager>("App", 1, 0, "ImageManager");
     qmlRegisterType<SelectionManager>("App", 2, 0, "SelectionManager");
+    qmlRegisterType<ColorToolProcessor>("ColorToolProcessor", 1, 0, "ColorToolProcessor");
+    qmlRegisterType<ImageStorage>("ImageStorage",1,0,"ImageStorage");
     QObject::connect(
         &engine,
         &QQmlApplicationEngine::objectCreationFailed,

@@ -2,13 +2,27 @@ import QtQuick 2.15
 import QtQuick.Controls.Material 2.15
 import QtQuick.Controls 2.15
 import App 1.0
+import ColorToolProcessor 1.0
+import ImageStorage 1.0
 
 Rectangle {
     id: center
-    color: "#ffffff"
-    anchors.margins: 10
+    color: Material.backgroundColor
+    Material.theme: Material.Dark
 
     property ImageManager imageManager: null
+    property ColorToolProcessor colorProcessor: null
+    property string previewImagePath: ""
+    property ImageStorage imageStorage: null
+
+
+    Connections {
+        target: colorProcessor
+        function onPreviewReady(imagePath) {
+            previewImagePath = imagePath
+            console.log("Preview ready:", imagePath)
+        }
+    }
 
     Column {
         anchors.fill: parent
@@ -17,19 +31,19 @@ Rectangle {
         Rectangle {
             width: parent.width
             height: parent.height - 80
-            color: "#f5f5f5"
-            border.color: "#e0e0e0"
+            color: Material.backgroundColor
+            border.color: Material.frameColor
             border.width: 1
-
 
             Text {
                 anchors.centerIn: parent
                 text: imageManager && imageManager.imageUrls.length > 0 ? "" : "No image loaded\nSelect images to get started"
-                color: "#666666"
+                color: Material.foreground
                 font.pixelSize: 16
                 horizontalAlignment: Text.AlignHCenter
                 visible: !imageManager || imageManager.imageUrls.length === 0
             }
+
 
             Image {
                 id: currentImage
@@ -38,12 +52,26 @@ Rectangle {
                 fillMode: Image.PreserveAspectFit
                 width: Math.min(parent.width - 20, 600)
                 height: Math.min(parent.height - 20, 600)
-                visible: imageManager && imageManager.imageUrls.length > 0
+                visible: imageManager && imageManager.imageUrls.length > 0 && previewImagePath === ""
+            }
 
 
+            Image {
+                id: previewImage
+                anchors.centerIn: parent
+                source: previewImagePath
+                fillMode: Image.PreserveAspectFit
+                width: Math.min(parent.width - 20, 600)
+                height: Math.min(parent.height - 20, 600)
+                visible: previewImagePath !== ""
 
-
-
+                onStatusChanged: {
+                    if (status === Image.Error) {
+                        console.log("Error loading preview image:", source)
+                    } else if (status === Image.Ready) {
+                        console.log("Preview image loaded successfully")
+                    }
+                }
             }
         }
 
@@ -61,17 +89,18 @@ Rectangle {
                 onClicked: {
                     if (imageManager) {
                         imageManager.previousImage()
+                        // Reset preview when changing image
+                        previewImagePath = ""
                         console.log("Previous clicked, new index:", imageManager.currentIndex)
                     }
                 }
             }
 
-
             Rectangle {
                 width: 120
                 height: 48
-                color: "#f5f5f5"
-                border.color: "#ddd"
+                color: Material.backgroundColor
+                border.color: Material.frameColor
                 radius: 4
 
                 Text {
@@ -79,7 +108,7 @@ Rectangle {
                     text: imageManager && imageManager.imageUrls.length > 0 ?
                           (imageManager.currentIndex + 1) + " / " + imageManager.imageUrls.length :
                           "0 / 0"
-                    color: "#333"
+                    color: Material.foreground
                     font.pixelSize: 14
                 }
             }
@@ -93,6 +122,7 @@ Rectangle {
                 onClicked: {
                     if (imageManager) {
                         imageManager.nextImage()
+                        previewImagePath = ""
                         console.log("Next clicked, new index:", imageManager.currentIndex)
                     }
                 }

@@ -4,6 +4,7 @@
 #include <QStringList>
 #include <QUrl>
 #include <QQmlEngine>
+#include "imagestorage.h"
 class ImageManager : public QObject
 {
     Q_OBJECT
@@ -21,12 +22,16 @@ public slots:
     void setCurrentIndex(int index);
     void nextImage();
     void previousImage();
+    void setImageStorage(ImageStorage *storage);
+
 signals:
     void imageUrlsChanged();
     void currentIndexChanged();
     void totalImagesChanged();
+    void currentImageIndexChanged(int index);
 private:
     QStringList m_imageUrls;
     int m_currentIndex;
+    ImageStorage *m_imageStorage;
 };
 #endif // IMAGEMANAGER_H

@@ -14,7 +14,7 @@ Rectangle {
     property int selectedFilesCount: 0
     property string currentTool: ""
     property ImageManager imageManager: null
-     property SelectionManager selectionManager: null
+    property SelectionManager selectionManager: null
 
     ScrollView {
         anchors.fill: parent
