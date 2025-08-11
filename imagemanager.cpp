@@ -47,7 +47,7 @@ void ImageManager::processImagePaths(const QStringList &filepaths)
         }
     }
     if(m_imageStorage){
-        m_imageStorage->getImagesbyPath(m_imageUrls);
+        m_imageStorage->loadImagesbyPath(m_imageUrls);
     }
     qDebug() << "Processed" << processedCount << "valid image files";
     m_currentIndex = 0;

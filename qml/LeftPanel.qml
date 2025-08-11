@@ -134,27 +134,6 @@ Rectangle {
                 }
             }
 
-            GroupBox {
-                Layout.fillWidth: true
-                title: "Quick Actions"
-
-                RowLayout {
-                    anchors.fill: parent
-                    spacing: 8
-
-                    Button {
-                        Layout.fillWidth: true
-                        text: "↶ Undo"
-                        enabled: false
-                    }
-
-                    Button {
-                        Layout.fillWidth: true
-                        text: "↷ Redo"
-                        enabled: false
-                    }
-                }
-            }
 
             Item {
                 Layout.fillHeight: true

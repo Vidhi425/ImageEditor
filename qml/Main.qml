@@ -33,12 +33,9 @@ Window {
     }
 
     Component.onCompleted: {
-
         sharedImageManager.setImageStorage(sharedImageStorage)
         sharedColorToolProcessor.setCurrentImageIndex(0)
-
         sharedColorToolProcessor.setImageStorage(sharedImageStorage)
-
         console.log("All components connected successfully")
     }
 

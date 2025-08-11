@@ -24,7 +24,6 @@ signals:
 private:
    QPixmap matToQPixmap(const cv::Mat &mat);
    cv::Mat currentOriginalImage;
-   int currentImageIndex = 0;
    ImageStorage *m_imageStorage;
    int m_currentImageIndex;
 };

@@ -6,7 +6,7 @@ ImageStorage::ImageStorage(QObject *parent)
     : QObject{parent}
 {}
 
-void ImageStorage::getImagesbyPath(const QStringList &imagePath)
+void ImageStorage::loadImagesbyPath(const QStringList &imagePath)
 {
     clearImages();
 

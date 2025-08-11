@@ -14,7 +14,7 @@ public:
     explicit ImageStorage(QObject *parent = nullptr);
 
 public slots:
-    void getImagesbyPath(const QStringList &imagePath);
+    void loadImagesbyPath(const QStringList &imagePath);
     cv::Mat getOriginalImage(int index);
     void saveImageSettings(int index, QString &toolName, int value);
     int getImageSettings(int index, QString &toolName);

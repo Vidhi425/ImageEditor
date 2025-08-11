@@ -28,7 +28,7 @@ void ColorToolProcessor::loadImage(const QString &imagePath) {
 }
 
 void ColorToolProcessor::setCurrentImage(int imageIndex) {
-    currentImageIndex = imageIndex;
+    m_currentImageIndex = imageIndex;
     if (m_imageStorage) {
         currentOriginalImage = m_imageStorage->getOriginalImage(imageIndex);
         qDebug() << "Current image set to index:" << imageIndex;

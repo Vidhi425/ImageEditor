@@ -12,7 +12,7 @@ public:
     explicit SelectionManager(QObject *parent = nullptr);
 
     QString selectedOption() const;
-    void setSelectedOption(QString &option);
+    void setSelectedOption(const QString &option);
 signals:
     void selectedOptionChanged();
 
